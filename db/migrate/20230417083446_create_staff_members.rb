@@ -16,4 +16,4 @@ class CreateStaffMembers < ActiveRecord::Migration[6.0]
     add_index :staff_members, [ :family_name_kana, :given_name_kana ]
   end
 end
-# 何やねん複合インデックスってほんまにムカつくわわからんすぎて！！！
+
