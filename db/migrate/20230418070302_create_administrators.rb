@@ -11,3 +11,4 @@ class CreateAdministrators < ActiveRecord::Migration[6.0]
     add_index :administrators, "LOWER(email)", unique: true
   end
 end
+

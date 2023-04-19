@@ -1,5 +1,7 @@
 <header>
   <span class="logo-mark">BAUKIS2</span>
+  <%= content_tag(:span, flash.notice, class: "notice") if flash.notice %>
+  <%= content_tag(:span, flash.alert, class: "alert") if flash.alert %>
   <%= 
     if current_staff_member
       link_to "ログアウト", :staff_session, method: :delete
@@ -11,3 +13,6 @@
 
 <%# current_staff_memberのメソッド呼び出しログイン済みだったらログアウトを表示させて %>
 <%# ログアウト状態だったらログインを表示させるロジック %>
+<%# content_tagのとことやけど自分やったら使わない方をする
+まずflash用のパーシャルを作ってそこでflashメソッドを使う形の方が分かりやすいし条件分岐を使わなくていいから
+それでやると思う %>
