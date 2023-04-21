@@ -1,50 +1,56 @@
 class Admin::StaffMembersController < Admin::Base
-  class Admin::StaffMembersController < Admin::Base
-    def index
-      @staff_members = StaffMember.order(:family_name_kana, :given_name_kana)
-    end
+  before_action
+  def index
+    @staff_members = StaffMember.order(:family_name_kana, :given_name_kana)
+  end
 
-    def show
-      staff_member = StaffMember.find(params[:id])
-      redirect_to [ :edit, :admin, staff_member ]
-    end
+  def show
+    staff_member = StaffMember.find(params[:id])
+    redirect_to [ :edit, :admin, staff_member ]
+  end
 
-    def new
-      @staff_member = StaffMember.new
-    end
+  def new
+    @staff_member = StaffMember.new
+  end
 
-    def edit
-      @staff_member = StaffMember.find(params[:id])
-    end
+  def edit
+    @staff_member = StaffMember.find(params[:id])
+  end
 
-    def create
-      @staff_member = StaffMember.new(params[:staff_member])
-      if @staff_member.save
-        flash.notice = "職員アカウントを新規登録しました"
-        redirect_to :admin_staff_members
-      else
-        render action: "new"
-      end
-    end
-
-    def updated_at
-      @staff_member = StaffMember.find(params[:id])
-      @staff_member.assign_attributes(params[:staff_member])
-      if @staff_member.save
-        flash.notice = "職員アカウントを更新しました"
-        redirect_to :admin_staff_members
-      else
-        render action: "edit"
-      end
-    end
-
-    def destroy
-      staff_member = StaffMember.find(params[:id])
-      staff_member.destroy!
-      flash.notice = "職員アカウントを削除しました"
+  def create
+    @staff_member = StaffMember.new(params[:staff_member])
+    if @staff_member.save
+      flash.notice = "職員アカウントを新規登録しました"
       redirect_to :admin_staff_members
+    else
+      render action: "new"
     end
   end
+
+  def updated_at
+    @staff_member = StaffMember.find(params[:id])
+    @staff_member.assign_attributes(params[:staff_member])
+    if @staff_member.save
+      flash.notice = "職員アカウントを更新しました"
+      redirect_to :admin_staff_members
+    else
+      render action: "edit"
+    end
+  end
+
+  def destroy
+    staff_member = StaffMember.find(params[:id])
+    staff_member.destroy!
+    flash.notice = "職員アカウントを削除しました"
+    redirect_to :admin_staff_members
+  end
+
+  private
+
+  def staff_member_params
+    params.require(:staff_login_form).permit(:email, :password)
+  end
+end
 end
 
 # StaffMemberのフォームオブジェクトからインスタンスを作成して
@@ -58,3 +64,5 @@ end
 # params[:モデル名]にすると入力情報がすべて取得してくることができる
 # 上記のやり方はrequire.permitでも同じ結果になるけれど、前者はrequire: falseになっているので
 # マスアサイメントによる不適切なデータを受け取ったりすることができる
+# なぜなのか意味不明、requireのとことにはモデル名を入れるんじゃないのか
+# なぜこんなことが起きるのか

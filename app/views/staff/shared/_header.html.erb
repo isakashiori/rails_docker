@@ -9,6 +9,7 @@
       link_to "ログイン", :staff_login
     end
   %>
+  <%= link_to "アカウント", :staff_accout if current_staff_member %>
 </header>
 
 <%# current_staff_memberのメソッド呼び出しログイン済みだったらログアウトを表示させて %>
